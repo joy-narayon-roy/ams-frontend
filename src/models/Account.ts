@@ -12,6 +12,6 @@ class Account {
   constructor() {}
 }
 
-export { AccountType, Account };
+export type { AccountType, Account };
 
 export default Account;

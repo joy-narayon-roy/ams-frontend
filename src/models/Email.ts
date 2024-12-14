@@ -103,5 +103,5 @@ class Email extends BasicClass {
   }
 }
 
-export { EmailType, Email };
+export type { EmailType };
 export default Email;

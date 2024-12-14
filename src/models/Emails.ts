@@ -1,10 +1,12 @@
 import ArrayObj, { _addLength, _removeLength } from "./ArrayObj.js";
-import { EmailType, Email } from "./Email.js";
+import { EmailType } from "./Email.js";
+import Email from "./Email.js";
 import User from "./User.js";
 
 const _by_addr = Symbol("");
 
 class Emails extends ArrayObj {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [_by_addr]: { [key: string]: any };
 
   constructor(emails: [EmailType], user: User) {

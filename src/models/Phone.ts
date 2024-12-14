@@ -89,5 +89,5 @@ class Phone extends BasicClass {
   }
 }
 
-export { PhoneType };
+export type { PhoneType };
 export default Phone;
