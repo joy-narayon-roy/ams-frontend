@@ -1,0 +1,61 @@
+{
+    "email": [
+        {
+            "name": "Gmail",
+            "extension": "gmail.com",
+            "icon_url": "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico"
+        },
+        {
+            "name": "Yahoo Mail",
+            "extension": "yahoo.com",
+            "icon_url": "https://s.yimg.com/rz/l/yahoo_en-US_f_p_bestfit_email.png"
+        },
+        {
+            "name": "Outlook",
+            "extension": "outlook.com",
+            "icon_url": "https://c.s-microsoft.com/favicon.ico?v2"
+        },
+        {
+            "name": "ProtonMail",
+            "extension": "protonmail.com",
+            "icon_url": "https://protonmail.com/images/favicon.ico"
+        },
+        {
+            "name": "Zoho Mail",
+            "extension": "zoho.com",
+            "icon_url": "https://www.zoho.com/favicon.ico"
+        },
+        {
+            "name": "iCloud Mail",
+            "extension": "icloud.com",
+            "icon_url": "https://www.apple.com/favicon.ico"
+        },
+        {
+            "name": "AOL Mail",
+            "extension": "aol.com",
+            "icon_url": "https://www.aol.com/favicon.ico"
+        },
+        {
+            "name": "Yandex Mail",
+            "extension": "yandex.com",
+            "icon_url": "https://mail.yandex.com/favicon.ico"
+        },
+        {
+            "name": "GMX Mail",
+            "extension": "gmx.com",
+            "icon_url": "https://www.gmx.com/favicon.ico"
+        },
+        {
+            "name": "Mail.com",
+            "extension": "mail.com",
+            "icon_url": "https://www.mail.com/favicon.ico"
+        },
+        {
+            "name": "*",
+            "icon_url": "https://www.mail.com/favicon.ico"
+        }
+    ],
+    "email_default": {
+        "icon_url": "https://c.s-microsoft.com/favicon.ico?v2"
+    }
+}

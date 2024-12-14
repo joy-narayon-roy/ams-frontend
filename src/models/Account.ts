@@ -1,0 +1,17 @@
+interface AccountType {
+  _id?: string;
+  // user_name: string;
+  // email_address?: string | null;
+  // phone_numder?: string | null;
+  // type: string;
+  // // password?: string | null;
+  // user?: string | User;
+}
+
+class Account {
+  constructor() {}
+}
+
+export { AccountType, Account };
+
+export default Account;
