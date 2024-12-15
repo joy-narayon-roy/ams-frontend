@@ -1,0 +1,117 @@
+/* @layer utilities { */
+header {
+  @apply py-2;
+  background: var(--col-main);
+  color: var(--col-pri);
+}
+header .container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.625rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .left {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-start;
+}
+header .left img.logo {
+  max-width: 3.5rem;
+}
+header .left h1 {
+  padding: 0 0.5rem;
+}
+
+header .right {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+header .right .user-info {
+  max-width: 10rem;
+  min-width: 6.25rem;
+  background: var(--col-sec);
+  border: 2px solid var(--col-main-outline);
+  color: var(--col-main);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0.3rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+header .right .user-info img {
+  width: 40px;
+  padding: 0 0.5rem 0 0;
+}
+
+header .right .user-manu {
+  position: absolute;
+  top: calc(2.75rem + 10px);
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 0;
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--col-sec);
+
+  color: var(--col-main);
+}
+header .right .user-manu::after {
+  width: 0;
+  height: 0px;
+  border-left: 1rem solid var(--col-main-outline);
+  border-top: 1rem solid var(--col-main-outline);
+  /* display: block; */
+  border-radius: 5px;
+  z-index: -1;
+  content: " ";
+  transform: rotate(45deg);
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  margin: 0 calc(50% - 25px);
+}
+header .right .user-manu ul {
+  display: block;
+}
+header .right .user-manu ul li {
+  display: block;
+  padding: 0.25rem;
+  margin: 0.25rem 0;
+  border-bottom: 2px solid var(--col-main-outline);
+}
+header .right .user-manu ul li:last-child {
+  border-bottom: none;
+}
+header .right .user-manu button {
+  width: 100%;
+  display: block;
+}
+header .right .show_manu {
+  height: auto;
+  box-sizing: border-box;
+  overflow: visible;
+  padding: 0.5rem 0.25rem;
+  border: 2px solid var(--col-main-outline);
+}
+/* } */

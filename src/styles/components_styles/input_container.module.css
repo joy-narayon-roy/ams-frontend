@@ -1,0 +1,10 @@
+.input_container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+.input_container label{
+    padding-left: 0.25rem;
+    color: var(--col-main);
+}

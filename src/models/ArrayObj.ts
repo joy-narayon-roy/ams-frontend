@@ -1,13 +1,16 @@
+import Email from "./Email";
+import Phone from "./Phone";
+
 const _addLength = Symbol("_addLength");
 const _removeLength = Symbol("_addLength");
 
 interface MyObject {
   key: string;
-  value: {};
+  value: Email | Phone;
   index: number;
 }
 
-type MyCallback = (data: MyObject) => void;
+type MyCallback = (data: MyObject) => any;
 
 class ArrayObj extends Object {
   [key: string]: any;

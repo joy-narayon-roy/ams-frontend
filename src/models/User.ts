@@ -7,7 +7,7 @@ import { AccountType } from "./Account.js";
 
 const _id = Symbol("id");
 
-interface UserArg {
+export interface UserArg {
   _id: string;
   name: string;
   email: string;

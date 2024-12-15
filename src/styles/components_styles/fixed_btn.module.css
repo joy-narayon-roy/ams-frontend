@@ -1,0 +1,21 @@
+.fixed {
+  width: auto;
+  position: fixed;
+  z-index: 999;
+  bottom: 1rem;
+  right: 1rem;
+}
+.fixed .up_btn {
+  width: 4rem;
+  height: 4rem;
+  display: block;
+  padding: 0;
+  background: var(--col-main-outline);
+  border-radius: 100%;
+  border: none;
+}
+
+.fixed .up_btn img {
+  height: 100%;
+  width: 100%;
+}

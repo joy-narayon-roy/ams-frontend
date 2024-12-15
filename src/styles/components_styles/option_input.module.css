@@ -1,0 +1,95 @@
+.input_box {
+  width: 100%;
+  height: auto;
+  position: relative;
+  background: #fff;
+  border: 2px solid var(--col-main-outline);
+  border-radius: 0.5rem;
+  /* overflow: hidden; */
+  /* overflow-y: auto; */
+  position: relative;
+}
+
+.input_box select {
+  display: block;
+  width: 100%;
+  border: none !important;
+  outline: none;
+  padding-left: 0.25rem;
+  font-size: 1rem;
+  color: var(--col-main);
+  caret-color: var(--col-main);
+  padding: 0.5rem;
+  border-radius: 1rem;
+}
+.input_box select::-webkit-scrollbar{
+  max-height: 20px;
+  background: #000;
+}
+
+/* .input_box select option {
+  position: absolute;
+  display: block;
+  width: 100%;
+  max-height: 10rem;
+  overflow-y: auto;
+  background: var(--col-main-outline);
+  border: 2px solid var(--col-main-outline);
+  border-top: none;
+  border-radius: 0 0 0.5rem 0.5rem;
+  padding: 0.25rem 0;
+  transition: var(--transition);
+} */
+/* .input_box datalist.hide_optin {
+  overflow: hidden;
+  width: 100%;
+  height: 0;
+  border: none;
+  padding: 0;
+} */
+/* .input_box select option {
+  cursor: pointer;
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-size: 1.1rem;
+  background: var(--col-main-outline);
+  color: #000;
+  border-top: 2px solid var(--col-white);
+}
+.input_box datalist option:first-child {
+  border-top: none;
+}
+.input_box datalist::-webkit-scrollbar {
+  width: 0;
+} */
+
+/* .input_box {
+  width: 100%;
+  margin: 0 auto;
+  border: 2px solid var(--col-main-outline);
+  display: flex;
+  justify-content: center;
+  background: var(--col-sec);
+  color: var(--col-main);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.invalid {
+  border: 2px solid var(--col-alrt);
+  background: var(--col-alrt-outline);
+  color: var(--col-alrt);
+}
+.input_box input {
+  display: block;
+  width: 100%;
+  border: none !important;
+  outline: none;
+  padding-left: 0.5rem;
+  font-size: 1rem;
+  color: var(--col-main);
+  caret-color: var(--col-main);
+  padding: 0.5rem;
+}
+.input_box ::selection {
+  background: var(--col-main-outline);
+} */

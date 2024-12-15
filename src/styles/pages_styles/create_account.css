@@ -1,0 +1,133 @@
+.details_main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.details_card {
+  width: 100%;
+  display: flex;
+  max-width: 548px;
+  padding: 1rem 0;
+  margin: 1rem 0;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1rem;
+  border: 3px solid var(--col-main-outline);
+}
+
+.details_card-top {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50px auto 50px;
+  grid-template-rows: auto;
+  align-items: center;
+  justify-items: center;
+  padding: 0 0.5rem;
+}
+.details_card-top .card_logo {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+}
+.details_card-top .card_logo img {
+  width: 100%;
+  height: 100%;
+}
+.details_card-top .card_name {
+  width: 100%;
+}
+
+.details_card-top .card_name h3 {
+  width: 100%;
+  color: var(--col-main);
+  text-align: left;
+  width: 100%;
+}
+.details_card-top .card_close {
+  width: 100%;
+  height: auto;
+  /* padding: 5px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.75;
+}
+.details_card-top .card_close button {
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  border: none;
+  outline: none;
+}
+.details_card-top .card_close button img {
+  width: 100%;
+  height: 100%;
+  transform: scale(0.8);
+}
+
+.details_card-body {
+  width: 100%;
+  padding: 0.5rem 0;
+  border-top: 3px solid var(--col-outline, #b2dfdb);
+}
+
+.details_card-body .details {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.details_card-body .input_container {
+  width: 90%;
+  margin: 0 auto;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.details_card-body .input_container label {
+  display: block;
+  align-items: center;
+  align-self: stretch;
+  color: var(--col-main);
+  font-size: 1rem;
+}
+.details_card-body .input_container input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.625rem;
+  align-items: center;
+  color: var(--col-main);
+  font-size: 1rem;
+  border: 2px solid var(--col-main-outline);
+  border-radius: 5px;
+  outline: none;
+  transition: var(--transition);
+}
+.details_card-body .input_container input:focus {
+  outline: none;
+  border: 2px solid var(--col-main);
+}
+
+.details_card-bottom {
+  width: 90%;
+  padding: 0 0.5rem;
+  margin: 0.5rem auto;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto;
+}
