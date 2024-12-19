@@ -23,14 +23,14 @@ export default function DetailsCard({
 }: {
   icone?: string;
   title?: string;
-  close_on_click?: () => unknown;
+  close_on_click?: (ev: React.MouseEvent<HTMLButtonElement>) => void;
   sumit_btn: boolean;
   save_btn: boolean;
-  save_btn_click?: () => unknown;
+  save_btn_click?: (ev: React.MouseEvent<HTMLButtonElement>) => void;
   edit_btn: boolean;
-  edit_btn_click?: () => unknown;
+  edit_btn_click?: (ev: React.MouseEvent<HTMLButtonElement>) => void;
   delete_btn: boolean;
-  delete_btn_click?: () => unknown;
+  delete_btn_click?: (ev: React.MouseEvent<HTMLButtonElement>) => void;
   children: React.ReactElement;
 }) {
   return (

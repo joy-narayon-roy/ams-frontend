@@ -66,7 +66,6 @@ export default function Accounts({
         {datas.map(({ key, value }: { key: string; value: Phone | Email }) => (
           <Vertical_card
             on_click={goto_details}
-            dataId={key}
             key={key}
             data={value}
           />

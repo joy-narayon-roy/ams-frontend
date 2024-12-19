@@ -22,10 +22,20 @@ class Emails extends ArrayObj {
     });
   }
 
-  add(id: string, value: Email): Emails {
-    this[id] = value;
-    this[_by_addr][value.address] = value;
-    this[_addLength]();
+  add(id: string | null, value: Email): Emails {
+    if (!id) {
+      return this;
+    }
+
+    if (this[id]) {
+      this[id] = value;
+      this[_by_addr][value.address] = value;
+    }else{
+      this[id] = value;
+      this[_by_addr][value.address] = value;
+      this[_addLength]();
+    }
+
     return this;
   }
 

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import styles from "../styles/components_styles/input_box.module.css";
 
@@ -14,6 +14,7 @@ type PropsType = {
   input_value?: string;
   on_input: (event: React.ChangeEvent<HTMLInputElement>) => void;
   data_list?: string;
+  input_reqired?: boolean;
 };
 
 export default function Input_Box({
@@ -24,6 +25,7 @@ export default function Input_Box({
   required = false,
   input_value = "",
   on_input,
+  input_reqired = false,
   data_list,
 }: PropsType) {
   const inp = useRef<HTMLInputElement>(null);
@@ -40,10 +42,6 @@ export default function Input_Box({
       );
     }
 
-    if (img.current) {
-      img.current.src = isPasswordVisible ? button_eye : button_not_eye;
-    }
-
     setIsPasswordVisible(!isPasswordVisible);
   };
 
@@ -51,11 +49,19 @@ export default function Input_Box({
     event.target.parentElement?.classList.add(styles["invalid"]);
   };
 
+  useEffect(() => {
+    if (isPasswordVisible) {
+      setTimeout(() => {
+        setIsPasswordVisible(false);
+      }, 3000);
+    }
+  }, [isPasswordVisible]);
+
   return (
     <div className={styles["input_box"]}>
       <input
         ref={inp}
-        type={type}
+        type={isPasswordVisible?'text':type}
         name={name}
         placeholder={placeholder}
         required={required}
@@ -63,10 +69,15 @@ export default function Input_Box({
         onChange={on_input}
         onInvalid={handleInvalid}
         list={data_list}
+        aria-required={input_reqired}
       />
       {button && (
         <button onClick={toggle_password} type="button">
-          <img ref={img} src={button_eye} alt="Toggle visibility" />
+          <img
+            ref={img}
+            src={isPasswordVisible ? button_not_eye : button_eye}
+            alt="Toggle visibility"
+          />
         </button>
       )}
     </div>

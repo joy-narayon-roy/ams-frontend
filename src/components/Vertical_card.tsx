@@ -5,7 +5,6 @@ import useIcone from "../hooks/useIcone";
 import { Email, Phone } from "../models";
 
 type propsType = {
-  dataId: string;
   data: Email | Phone;
   on_click: ({
     data,

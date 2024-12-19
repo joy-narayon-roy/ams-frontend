@@ -12,6 +12,7 @@ type InputContainerProps = {
   on_input: (event: React.ChangeEvent<HTMLInputElement>) => void;
   button?: boolean;
   data_list?: boolean;
+  input_reqired?: boolean;
   dataOptions?: { value: string }[];
 };
 
@@ -27,6 +28,7 @@ export default function Input_container({
   button = false,
   data_list = false,
   dataOptions = [],
+  input_reqired = false,
 }: InputContainerProps) {
   return (
     <div className={styles.input_container}>
@@ -35,11 +37,11 @@ export default function Input_container({
         type={input_type}
         name={input_name}
         placeholder={input_placeholder}
-        // autoComplete={input_autoComplete}
         required={input_required}
         input_value={input_value}
         on_input={on_input}
         button={button}
+        input_reqired={input_reqired}
         data_list={data_list ? "dl" : ""}
       />
       {data_list && dataOptions.length > 0 && (

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Input_container from "./Input_container";
+import InputContainer from "./InputContainer";
 import Button from "./Button";
 // import Logo_button from "./Logo_button";
 
@@ -48,7 +48,7 @@ export default function Signin_Form({ title }: { title: string }) {
       <div className="line"></div>
 
       <div className="login_form-inputs">
-        <Input_container
+        <InputContainer
           title="Enter Email"
           input_name="email"
           input_placeholder="Enter your email"
@@ -58,7 +58,7 @@ export default function Signin_Form({ title }: { title: string }) {
           input_value={userInfo.email}
         />
 
-        <Input_container
+        <InputContainer
           title="Enter Password"
           input_name="password"
           input_placeholder="Enter your password"

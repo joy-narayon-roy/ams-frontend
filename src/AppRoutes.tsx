@@ -8,14 +8,22 @@ import {
   //   CreateAccount,
   Deshboard,
   Details,
-  //   Not_found,
-  //   Server_faild,
   Signin,
   //   Signout,
   //   Signup,
   //   Update_profile,
   //   UpdateDetails,
 } from "./pages";
+import Page500 from "./pages/Pgae500";
+import Page404 from "./pages/Pgae404";
+
+import {
+  PhoneTable,
+  EmailTable,
+  NotFound,
+} from "./components/details_table_component";
+
+import { UpdateEmail, UpdatePhone } from "./components/update_accounts_forms";
 
 // import {
 //   Create_app_account,
@@ -65,7 +73,7 @@ function AppRoutes() {
         path="/create"
         element={
           <UserProtected>
-            <div>{/* <CreateAccount /> */}</div>
+            <div>{/* <CreateAccount /> */}Create</div>
           </UserProtected>
         }
       >
@@ -82,18 +90,28 @@ function AppRoutes() {
         path="/details"
         element={
           <UserProtected>
-            <Details />
+            <Details editMode={false} />
           </UserProtected>
         }
       >
-        {/* <Route index element={<div><Create_phone /></div>} /> */}
-        <Route path="phone/:id" element={<div>Phone</div>} />
-        <Route path="email/:id" element={<div>Details_email</div>} />
-        {/* 
-        <Route path="facebook" element={<Create_facebook />} />
-        <Route path="web" element={<Create_web_account />} />
-        <Route path="app" element={<Create_app_account />} /> */}
-        <Route path="*" element={<div>Othets</div>} />
+        <Route index element={<NotFound />} />
+        <Route path="phone/:id" element={<PhoneTable />} />
+        <Route path="email/:id" element={<EmailTable />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+
+      <Route
+        path="/update"
+        element={
+          <UserProtected>
+            <Details editMode={true} />
+          </UserProtected>
+        }
+      >
+        <Route index element={<NotFound />} />
+        <Route path="phone/:id" element={<UpdatePhone />} />
+        <Route path="email/:id" element={<UpdateEmail />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
 
       <Route
@@ -105,47 +123,8 @@ function AppRoutes() {
         }
       />
 
-      {/* <Route path="/updateprofile" element={<Update_profile />} /> */}
-
-      {/* <Route
-        path="/update"
-        element={
-          <UserProtected>
-            <UpdateDetails />
-          </UserProtected>
-        }
-      >
-        <Route index element={<Update_phone />} />
-        <Route path="phone" element={<Update_phone />} />
-        <Route path="email" element={<Update_email />} />
-      </Route>
-
-      <Route
-        path="/details"
-        element={
-          <UserProtected>
-            <Details_page />
-          </UserProtected>
-        }
-      >
-        <Route index element={<Phone_table />} />
-        <Route path="phone" element={<Phone_table />} />
-        <Route path="email" element={<Email_table />} />
-      </Route>
-    <Route
-        path="/signout"
-        element={
-          <UserProtected>
-            <Signout />
-          </UserProtected>
-        }
-      />
-
-      <Route path="/signup" element={<Signup />} />
-
-      <Route path="/failed" element={<Server_faild />} />
-      <Route path="/404" element={<Not_found />} />
-      <Route path="*" element={<Not_found />} /> */}
+      <Route path="/error" element={<Page500 />} />
+      <Route path="*" element={<Page404 />} />
     </Routes>
   );
 }

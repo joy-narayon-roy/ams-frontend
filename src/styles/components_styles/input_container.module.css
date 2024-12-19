@@ -1,4 +1,5 @@
 .input_container{
+    @apply my-4;
     width: 100%;
     display: flex;
     flex-direction: column;

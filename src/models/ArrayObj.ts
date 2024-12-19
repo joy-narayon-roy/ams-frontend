@@ -24,8 +24,12 @@ class ArrayObj extends Object {
     return this.#length;
   }
 
-  [_addLength]() {
-    this.#length++;
+  [_addLength](value: number | undefined = undefined) {
+    if (!value) {
+      this.#length++;
+    } else {
+      this.#length = value;
+    }
   }
 
   [_removeLength]() {

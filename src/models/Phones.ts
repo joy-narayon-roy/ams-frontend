@@ -53,7 +53,7 @@ export default class Phones extends ArrayObj {
     return this[_by_number][number] ? this[_by_number][number] : null;
   }
 
-  filterByNumber(number: String): Phone[] {
+  filterByNumber(number: string): Phone[] {
     return Object.keys(this[_by_number])
       .filter((n: string) => new RegExp(`${number}`, "g").test(n))
       .map((e) => this[_by_number][e]);

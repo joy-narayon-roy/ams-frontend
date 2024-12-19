@@ -1,3 +1,4 @@
+import { AxiosInstance } from "axios";
 import BasicClass from "./BasicClass.js";
 import Phone from "./Phone.js";
 import User from "./User.js";
@@ -73,7 +74,7 @@ class Email extends BasicClass {
     return "email";
   }
 
-  update(updateData: UpdateEmailType, req: any) {
+  update(updateData: UpdateEmailType, req: AxiosInstance) {
     const id = this.id;
 
     if (updateData.address == this.address) {
@@ -87,18 +88,42 @@ class Email extends BasicClass {
     };
   }
 
-  toJSON(): any {
-    const new_obj = Object.entries(this)
-      .filter((arr: any): any => arr[1])
-      .reduce((pre: any, curr: any): any => {
-        pre[curr[0]] = curr[1];
-        return pre;
-      }, {});
+  // OldtoJSON(): any {
+  //   const new_obj = Object.entries(this)
+  //     .filter((arr: any): any => arr[1])
+  //     .reduce((pre: any, curr: any): any => {
+  //       pre[curr[0]] = curr[1];
+  //       return pre;
+  //     }, {});
 
+  //   new_obj.ref = {
+  //     phone: this.#phone?.id,
+  //     user: this.#user?.id,
+  //   };
+  //   return new_obj;
+  // }
+
+  toJSON(): any {
+    // Create a filtered object by iterating over class properties
+    const new_obj = Object.entries(this)
+      .filter((value): boolean => Boolean(value[1])) // Filter out falsy values
+      .reduce(
+        (
+          pre: Record<string, unknown>,
+          [key, value]
+        ): Record<string, unknown> => {
+          pre[key] = value;
+          return pre;
+        },
+        {}
+      );
+
+    // Add a `ref` object with specific references
     new_obj.ref = {
-      phone: this.#phone?.id,
-      user: this.#user?.id,
+      phone: this.#phone?.id ?? null, // Safely access `id` or default to `null`
+      user: this.#user?.id ?? null,
     };
+
     return new_obj;
   }
 }
