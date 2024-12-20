@@ -48,43 +48,43 @@ export default class Create_email extends Component<ComponentsProps, State> {
     const { user_name, address, phone_number, password } = this.state;
     return (
       <>
-          <Input_container
-            title="User Name :"
-            input_type="text"
-            input_name="user_name"
-            input_reqired={true}
-            input_placeholder="Enter your user name"
-            on_input={this.handel_input}
-            input_value={user_name}
-          />
-          <Input_container
-            title="Email Address :"
-            input_type="email"
-            input_name="address"
-            input_reqired={true}
-            input_placeholder="Enter your email address"
-            on_input={this.handel_input}
-            input_value={address}
-          />
-          <Input_container
-            title="Enter Phone Number :"
-            input_type="tel"
-            input_name="phone_number"
-            input_placeholder="Enter your Phone Number"
-            on_input={this.handel_input}
-            input_value={phone_number}
-          />
-          <Input_container
-            title="Password :"
-            input_type="password"
-            input_name="password"
-            input_placeholder="Enter your password"
-            input_reqired={true}
-            button={true}
-            on_input={this.handel_input}
-            input_value={password}
-          />
-          {/* <Input_container
+        <Input_container
+          title="User Name :"
+          input_type="text"
+          input_name="user_name"
+          input_reqired={true}
+          input_placeholder="Enter your user name"
+          on_input={this.handel_input}
+          input_value={user_name}
+        />
+        <Input_container
+          title="Email Address :"
+          input_type="email"
+          input_name="address"
+          input_reqired={true}
+          input_placeholder="Enter your email address"
+          on_input={this.handel_input}
+          input_value={address}
+        />
+        <Input_container
+          title="Enter Phone Number :"
+          input_type="tel"
+          input_name="phone_number"
+          input_placeholder="Enter your Phone Number"
+          on_input={this.handel_input}
+          input_value={phone_number}
+        />
+        <Input_container
+          title="Password :"
+          input_type="password"
+          input_name="password"
+          input_placeholder="Enter your password"
+          input_reqired={true}
+          button={true}
+          on_input={this.handel_input}
+          input_value={password}
+        />
+        {/* <Input_container
           title="Re-enter Password :"
           input_type="password"
           input_name="re_password"
@@ -93,7 +93,7 @@ export default class Create_email extends Component<ComponentsProps, State> {
           button={true}
           on_input={this.handel_input}
           input_value={re_password}
-        /> */}
+          /> */}
         {/* </form> */}
       </>
     );

@@ -5,17 +5,14 @@ import { useAuthContext } from "./contexts/AuthContext";
 import { User } from "./models";
 
 import {
-  //   CreateAccount,
   Deshboard,
   Details,
   Signin,
-  //   Signout,
-  //   Signup,
-  //   Update_profile,
-  //   UpdateDetails,
+  CreateAccount,
+  PgaeNotfound,
+  PgaeServerError,
 } from "./pages";
-import Page500 from "./pages/Pgae500";
-import Page404 from "./pages/Pgae404";
+import Test from "./Test";
 
 import {
   PhoneTable,
@@ -23,18 +20,8 @@ import {
   NotFound,
 } from "./components/details_table_component";
 
+import { CreateEmail, CreatePhone } from "./components/create_accounts_forms";
 import { UpdateEmail, UpdatePhone } from "./components/update_accounts_forms";
-
-// import {
-//   Create_app_account,
-//   Create_email,
-//   Create_facebook,
-//   Create_phone,
-//   Create_web_account,
-// } from "./components/create_accounts_forms";
-
-// import { Update_email, Update_phone } from "./components/update_accounts_forms";
-// import { Phone_table, Email_table } from "./components/details_table_component";
 
 function NotLogedin({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuthContext();
@@ -73,17 +60,14 @@ function AppRoutes() {
         path="/create"
         element={
           <UserProtected>
-            <div>{/* <CreateAccount /> */}Create</div>
+            <CreateAccount />
           </UserProtected>
         }
       >
-        {/* <Route index element={<div><Create_phone /></div>} />
-        <Route path="phone" element={<Create_phone />} />
-        <Route path="email" element={<Create_email />} />
-        <Route path="facebook" element={<Create_facebook />} />
-        <Route path="web" element={<Create_web_account />} />
-        <Route path="app" element={<Create_app_account />} />
-        <Route path="*" element={<Navigate to={"phone"} />} /> */}
+        <Route index element={<Navigate to={"/create/phone"} />} />
+        <Route path="phone" element={<CreatePhone data={null} />} />
+        <Route path="email" element={<CreateEmail data={null} />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
 
       <Route
@@ -123,8 +107,11 @@ function AppRoutes() {
         }
       />
 
-      <Route path="/error" element={<Page500 />} />
-      <Route path="*" element={<Page404 />} />
+      <Route path="/error" element={<PgaeServerError />} />
+      {import.meta.env.MODE == "development" && (
+        <Route path="/test" element={<Test />} />
+      )}
+      <Route path="*" element={<PgaeNotfound />} />
     </Routes>
   );
 }

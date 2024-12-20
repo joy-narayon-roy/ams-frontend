@@ -9,6 +9,7 @@
 
 .details_card {
   width: 100%;
+  background: #fff;
   display: flex;
   max-width: 548px;
   padding: 1rem 0;
@@ -47,6 +48,7 @@
   width: 100%;
   color: var(--col-main);
   text-align: left;
+  font-size: 1.25rem;
   width: 100%;
 }
 .details_card-top .card_close {
@@ -78,6 +80,7 @@
   width: 100%;
   padding: 0.5rem 0;
   border-top: 3px solid var(--col-outline, #b2dfdb);
+  color: var(--col-main);
 }
 
 .details_card-body .details {
@@ -87,7 +90,7 @@
   flex-wrap: nowrap;
   align-content: center;
   padding: 1rem;
-  gap: 1rem;
+  /* gap: 1rem; */
 }
 
 .details_card-body .input_container {

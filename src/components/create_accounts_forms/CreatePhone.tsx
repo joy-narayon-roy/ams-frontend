@@ -15,7 +15,7 @@ type State = {
   active: boolean | null;
 };
 
-export default class Create_phone extends Component<ComponentsProps, State> {
+export default class CreatePhone extends Component<ComponentsProps, State> {
   constructor(props: { data: Phone | null }) {
     super(props);
     this.state = {
@@ -46,31 +46,34 @@ export default class Create_phone extends Component<ComponentsProps, State> {
     return (
       <>
         {/* <form className="px-6 py-3" id="inputForm"> */}
-          <InputContainer
-            title="User Name"
-            input_type="text"
-            input_name="user_name"
-            input_value={user_name}
-            on_input={this.handel_input}
-            input_reqired={true}
+        <InputContainer
+          title="User Name"
+          input_type="text"
+          input_name="user_name"
+          input_value={user_name}
+          on_input={this.handel_input}
+          input_required={true}
+          input_placeholder="Enter user name"
+        />
+        <InputContainer
+          title="Phone Number"
+          input_type="tel"
+          input_name="number"
+          input_value={number}
+          on_input={this.handel_input}
+          input_required={true}
+          input_placeholder="Enter phone number"
           />
-          <InputContainer
-            title="Phone Number"
-            input_type="tel"
-            input_name="number"
-            input_value={number}
-            on_input={this.handel_input}
-            input_reqired={true}
-          />
-          <InputContainer
-            input_type="text"
-            title="Registered Name"
-            input_name="registered_by"
-            on_input={this.handel_input}
-            input_value={registered_by}
-            input_reqired={true}
-          />
-          <Radio_input on_input={this.handel_input} input_value={active} />
+        <InputContainer
+          input_type="text"
+          title="Registered Name"
+          input_name="registered_by"
+          on_input={this.handel_input}
+          input_value={registered_by}
+          input_required={true}
+          input_placeholder="Enter registered name"
+        />
+        <Radio_input on_input={this.handel_input} input_value={active} />
         {/* </form> */}
       </>
     );

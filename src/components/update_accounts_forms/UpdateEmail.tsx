@@ -8,5 +8,9 @@ export default function Update_email() {
   const id = pathname.replace("/update/email/", "");
   const data = user?.emails.findById(id);
 
-  return <CreateEmail data={data ? data : null} />;
+  return (
+    <div className="px-6 py-3">
+      <CreateEmail data={data ? data : null} />
+    </div>
+  );
 }

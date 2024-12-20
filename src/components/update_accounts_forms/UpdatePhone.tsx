@@ -8,5 +8,9 @@ export default function UpdatePhone() {
   const { user } = useAuthContext();
   const data = user && user.phones ? user.phones.findOneById(id) : null;
 
-  return <CreatePhone data={data} />;
+  return (
+    <div className="px-6 py-3">
+      <CreatePhone data={data} />
+    </div>
+  );
 }

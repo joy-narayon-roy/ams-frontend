@@ -1,65 +1,12 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from "react";
 import DetailsCard from "../components/DetailsCard";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
-import useIcone from "../hooks/useIcone";
-import { Email, Phone, User } from "../models";
+import getIcone from "../hooks/useIcone";
+import { parseForm } from "../tools";
+import { updateEmail, updatePhone } from "../utilities/updateDatas";
 import httpReq from "../utilities/httpReq";
-
-async function updateEmail(user: User, emailId: string, updatedData: object) {
-  const email = user.emails.findById(emailId);
-  const updateInstence = email.update(updatedData, httpReq);
-
-  try {
-    const { data } = await updateInstence.save();
-    const updatedEmail = new Email(data);
-    user.emails.add(updatedEmail.id, updatedEmail);
-    return {
-      done: true,
-      message: "Email updated.",
-    };
-  } catch (error) {
-    let message = "Failed to update"; // Default message
-    if (error && typeof error === "object" && "message" in error) {
-      message = (error as { message: string }).message; // Type assertion
-    }
-    return {
-      done: false,
-      message: message,
-    };
-  }
-}
-
-async function updatePhone(user: User, id: string, updatedData: object) {
-  const phone = user.phones.findOneById(id);
-  if (!phone) {
-    return {
-      done: false,
-      message: "Phone not found!",
-    };
-  }
-
-  const updateInstence = phone.update(updatedData, httpReq);
-  try {
-    const { data } = await updateInstence.save();
-    const updatedPhone = new Phone(data);
-    user.phones.add(id, updatedPhone);
-    return {
-      done: true,
-      message: "Phone updated.",
-    };
-  } catch (error) {
-    let message = "Failed to update"; // Default message
-    if (error && typeof error === "object" && "message" in error) {
-      message = (error as { message: string }).message; // Type assertion
-    }
-    return {
-      done: false,
-      message: message,
-    };
-  }
-}
+import { useAlert } from "../contexts/AlertContext";
 
 export default function Details_page({
   editMode = false,
@@ -69,6 +16,7 @@ export default function Details_page({
   const nav = useNavigate();
   const location = useLocation();
   const { user } = useAuthContext();
+  const { addAlert } = useAlert();
 
   const { pathname } = location;
   const [mode, entity, id] = pathname.replace("/", "").split("/");
@@ -90,75 +38,117 @@ export default function Details_page({
     nav(-1);
   }
 
-  useEffect(() => {
-    document.title = `AMS - ${mode[0].toUpperCase()}${mode.slice(
-      1,
-      mode.length
-    )}`;
-    switch (entity) {
-      case "email":
-        if (user && user.emails && user?.emails.findById(id)) {
-          setInfo(useIcone(user?.emails.findById(id)));
-        }
-        break;
-      case "phone":
-        setInfo(useIcone(user?.phones.findOneById(id)));
-        break;
-
-      default:
-        break;
+  function onDelete(ev: React.MouseEvent<HTMLButtonElement>) {
+    const deleteBtn = ev.currentTarget;
+    deleteBtn.setAttribute("disabled", "true");
+    const okey = confirm(`Want to Delete - ${entity} - ${id}?`);
+    if (okey) {
+      httpReq
+        .delete(`${entity}/${id}`)
+        .then(() => {
+          addAlert("success", `${entity} ${id} deleted.`);
+          if (user) {
+            switch (entity) {
+              case "phone":
+                user.phones.remove(id);
+                break;
+              case "email":
+                user.emails.remove(id);
+                break;
+              default:
+                break;
+            }
+          }
+          nav("/");
+        })
+        .catch((err) => {
+          addAlert("failed", `Faild to delete ${entity} ${id}.`);
+          console.log(err);
+        });
+    } else {
+      deleteBtn.removeAttribute("disabled");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode]);
+  }
 
   function onEditSave(ev: React.MouseEvent<HTMLButtonElement>) {
     if (editMode) {
       ev.currentTarget.setAttribute("disabled", "true");
-      // const [path, id] = location.pathname.replace("/update/", "").split("/");
       const inputForm = document.getElementById("inputForm");
-      const inputs = inputForm
-        ? [...inputForm.getElementsByTagName("input")]
-        : [];
+      const targetBtn = ev.currentTarget;
 
-      inputs.forEach((inp: HTMLInputElement) => {
-        inp.checkValidity();
-      });
-
-      const updatedData = inputs.reduce<Record<string, string>>((pre, curr) => {
-        pre[curr.name] = curr.value;
-        return pre;
-      }, {});
+      const updatedData = parseForm(inputForm);
 
       if (user) {
         switch (entity) {
           case "phone":
             updatePhone(user, id, updatedData).then((status) => {
+              addAlert(status.done ? "success" : "failed", status.message);
               if (status.done) {
                 return nav(-1);
               }
-              ev.currentTarget.removeAttribute("disabled");
+              targetBtn.removeAttribute("disabled");
             });
             break;
           case "email":
             updateEmail(user, id, updatedData).then((status) => {
+              addAlert(status.done ? "success" : "failed", status.message);
               if (status.done) {
                 return nav(-1);
               }
-              ev.currentTarget.removeAttribute("disabled");
+              targetBtn.removeAttribute("disabled");
             });
 
             break;
 
           default:
+            targetBtn.removeAttribute("disabled");
             break;
         }
       }
     }
   }
 
-  function onDelete() {
-    console.log("Deleteing");
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formValid = e.currentTarget.checkValidity();
+    if (formValid) {
+      document.getElementById("saveBtn")?.click();
+    } else {
+      e.currentTarget.reportValidity();
+    }
   }
+
+  useEffect(() => {
+    document.title = `AMS - ${mode[0].toUpperCase()}${mode.slice(
+      1,
+      mode.length
+    )}`;
+    const onKeydownFun = (ev: KeyboardEvent) => {
+      if (ev.key == "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", onKeydownFun);
+    switch (entity) {
+      case "email":
+        if (user && user.emails && user?.emails.findById(id)) {
+          setInfo(getIcone(user?.emails.findById(id)));
+        }
+        break;
+      case "phone":
+        setInfo(getIcone(user?.phones.findOneById(id)));
+        break;
+
+      default:
+        break;
+    }
+
+    return () => {
+      window.removeEventListener("keydown", onKeydownFun);
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, entity]);
 
   const { name, src } = info;
   return (
@@ -176,8 +166,9 @@ export default function Details_page({
         sumit_btn={false}
       >
         {editMode ? (
-          <form className="px-6 py-3" id="inputForm">
+          <form onSubmit={onSubmit}>
             <Outlet />
+            <button className="hidden" type="submit"></button>
           </form>
         ) : (
           <Outlet />

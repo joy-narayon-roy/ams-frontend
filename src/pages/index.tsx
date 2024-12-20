@@ -1,7 +1,15 @@
 import Signin from "./Signin";
 import Deshboard from "./Deshboard";
+import CreateAccount from "./CreateAccount";
 import Details from "./Details";
-import Pgae404 from "./Pgae404";
-import Pgae500 from "./Pgae500";
+import PgaeNotfound from "./Pgae404";
+import PgaeServerError from "./Pgae500";
 
-export { Deshboard, Details, Signin, Pgae404, Pgae500 };
+export {
+  Deshboard,
+  Details,
+  Signin,
+  CreateAccount,
+  PgaeNotfound,
+  PgaeServerError,
+};

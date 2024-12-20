@@ -18,7 +18,6 @@ export default function Vertical_card({
   data,
   on_click = () => {},
 }: propsType) {
-  // console.log(dataId, data);
   if (!data) {
     return <></>;
   }

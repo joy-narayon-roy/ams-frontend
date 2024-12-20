@@ -5,6 +5,7 @@ main {
   justify-content: center;
 }
 .login_form {
+  width: 100%;
   display: flex;
   padding: 1rem;
   flex-direction: column;

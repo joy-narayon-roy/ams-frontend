@@ -27,7 +27,10 @@ header .left {
 header .left img.logo {
   max-width: 3.5rem;
 }
+
 header .left h1 {
+  font-size: 3.125rem;
+  font-weight: lighter;
   padding: 0 0.5rem;
 }
 

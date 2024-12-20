@@ -72,7 +72,12 @@ export default function DetailsCard({
             <div></div>
           )}
           {save_btn ? (
-            <Button type="button" on_click={save_btn_click} text={"Save"} />
+            <Button
+              type="button"
+              id="saveBtn"
+              on_click={save_btn_click}
+              text={"Save"}
+            />
           ) : sumit_btn ? (
             <Button type="submit" text="Submit" />
           ) : (

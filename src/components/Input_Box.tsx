@@ -10,11 +10,10 @@ type PropsType = {
   name?: string;
   placeholder?: string;
   button?: boolean;
-  required?: boolean;
   input_value?: string;
   on_input: (event: React.ChangeEvent<HTMLInputElement>) => void;
   data_list?: string;
-  input_reqired?: boolean;
+  input_required?: boolean;
 };
 
 export default function Input_Box({
@@ -22,10 +21,9 @@ export default function Input_Box({
   name = "",
   placeholder = "",
   button = false,
-  required = false,
   input_value = "",
   on_input,
-  input_reqired = false,
+  input_required = false,
   data_list,
 }: PropsType) {
   const inp = useRef<HTMLInputElement>(null);
@@ -61,15 +59,14 @@ export default function Input_Box({
     <div className={styles["input_box"]}>
       <input
         ref={inp}
-        type={isPasswordVisible?'text':type}
+        type={isPasswordVisible ? "text" : type}
         name={name}
         placeholder={placeholder}
-        required={required}
+        required={input_required}
         value={input_value}
         onChange={on_input}
         onInvalid={handleInvalid}
         list={data_list}
-        aria-required={input_reqired}
       />
       {button && (
         <button onClick={toggle_password} type="button">

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import image404 from "../images/404img.png";
 
-export default function Page404() {
+export default function PageNotFound() {
   useEffect(() => {
     document.title = "AMS - Page not found.";
   }, []);

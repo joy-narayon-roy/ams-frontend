@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import add_icon from "../images/add.png";
 import pdf_downlaod from "../images/pdf_download.png";
-// import Vertical_card from "./Vertical_card";
 import Empty from "./Empty";
 import ArrayObj from "../models/ArrayObj";
 import { Email, Phone } from "../models";

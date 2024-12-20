@@ -2,7 +2,7 @@ import { Email, Phone } from "../models";
 import getEmailProvider from "./getEmailProvider";
 import getOperator from "./getOperator";
 
-function useIcone(data: Phone | Email | null | undefined) {
+function getIcone(data: Phone | Email | null | undefined) {
   if (data && data instanceof Phone) {
     return getOperator(data.number);
   } else if (data && data instanceof Email) {
@@ -13,4 +13,4 @@ function useIcone(data: Phone | Email | null | undefined) {
   }
 }
 
-export default useIcone;
+export default getIcone;

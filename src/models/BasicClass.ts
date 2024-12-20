@@ -1,3 +1,9 @@
+import { AxiosInstance } from "axios";
+
+type axiosResType = {
+  data: object;
+};
+
 class BasicClass {
   #serverPath: string;
   constructor(path: string) {
@@ -25,7 +31,7 @@ class BasicClass {
     return dataObj;
   }
 
-  save(req: any): Promise<any> {
+  save(req: AxiosInstance): Promise<axiosResType> {
     return req.post(this.#serverPath, this.toJSON());
   }
 }

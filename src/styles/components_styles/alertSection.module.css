@@ -1,0 +1,36 @@
+.alert-section {
+  width: 100%;
+  max-width: 36rem;
+  margin: 0 auto;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.alert-popup {
+  @apply border-2 rounded-md px-4 py-1 border-gray-300 opacity-80;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  max-width: 32rem;
+  margin: 0 auto;
+  opacity: 0.55;
+}
+
+.alert-popup span:first-child {
+  display: block;
+  width: 100%;
+}
+.alert-popup span:last-child {
+  font-size: 1rem;
+  padding: 0.3rem;
+  cursor: pointer;
+}
+
+.success {
+  @apply bg-green-300 text-green-950 border-green-500;
+}
+
+.failed {
+  @apply bg-red-300 text-red-950 border-red-500;
+}

@@ -6,8 +6,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
   align-self: stretch;
+  gap: 1rem;
+  padding-bottom: 2rem;
   flex-wrap: nowrap;
   justify-content: flex-start;
 }
@@ -28,10 +29,14 @@
   border-radius: 1rem;
   border: 3px solid var(--col-main-outline);
   background: var(--col-white);
+  overflow-x: scroll;
+}
+.account_container::-webkit-scrollbar {
+  display: none;
 }
 .account_container-top {
   display: flex;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
@@ -44,6 +49,10 @@
   color: var(--col-main);
   text-align: center;
   font-size: 1.1rem;
+}
+.account_container-top_left h3 {
+  font-size: 1.75rem;
+  font-weight: 500;
 }
 .account_container-top_right {
   display: flex;

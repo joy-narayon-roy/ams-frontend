@@ -5,9 +5,11 @@ import Button from "./Button";
 // import Logo_button from "./Logo_button";
 
 import { useAuthContext } from "../contexts/AuthContext";
+import { useAlert } from "../contexts/AlertContext";
 
 export default function Signin_Form({ title }: { title: string }) {
   const authContext = useAuthContext();
+  const { addAlert } = useAlert();
 
   const [button_disabled, setButton_disabled] = useState(false);
   const [userInfo, setUserInfo] = useState({
@@ -30,17 +32,21 @@ export default function Signin_Form({ title }: { title: string }) {
         ...userInfo,
       })
       .then(() => {
-        alert("Success");
+        addAlert("success", "Successfuly login!");
       })
       .catch((err) => {
         setButton_disabled(false);
-        alert("Failed to login.");
+        addAlert("failed", err.message);
         console.log(err);
       });
   };
 
   return (
-    <form onSubmit={form_submit_handeler} className="login_form" action="">
+    <form
+      onSubmit={form_submit_handeler}
+      className="login_form max-w-sm"
+      action=""
+    >
       <div className="login_form-title">
         <h2>{title}</h2>
       </div>
