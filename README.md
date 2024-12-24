@@ -1,53 +1,18 @@
 # AMS
-- [Visit](https://mydemoams.netlify.app/)
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+#### Save your account and password.
 
-Currently, two official plugins are available:
+# AMS-frontend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Host in Firebase and Netlify app.<br/>
+**Netlify url** : <a href='https://mydemoams.netlify.app/' target='_blank'>https://mydemoams.netlify.app</a>
 
-## Expanding the ESLint configuration
+**Firebase url 1** : <a href='https://myams-39bda.web.app' target='_blank'>https://myams-39bda.web.app</a>
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+**Firebase url 2** : <a href='https://myams-39bda.firebaseapp.com/' target='_blank'>https://myams-39bda.firebaseapp.com</a>
 
-- Configure the top-level `parserOptions` property like this:
+# AMS-backend
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- Git repository : <a target='_blank' href="https://github.com/joy-narayon-roy/ams-backend">https://github.com/joy-narayon-roy/ams-backend</a>
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# ams-frontend
+- Render : <a target='_blank' href=" https://ams-backend-avjd.onrender.com"> https://ams-backend-avjd.onrender.com</a>
