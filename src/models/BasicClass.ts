@@ -5,9 +5,14 @@ type axiosResType = {
 };
 
 class BasicClass {
+  #id: string | null;
   #serverPath: string;
-  constructor(path: string) {
+  constructor(path: string, id: string | null | undefined) {
     this.#serverPath = path;
+    this.#id = id ?? null;
+  }
+  get id() {
+    return this.#id;
   }
 
   get data_type() {
@@ -31,8 +36,14 @@ class BasicClass {
     return dataObj;
   }
 
-  save(req: AxiosInstance): Promise<axiosResType> {
+  old_save(req: AxiosInstance): Promise<axiosResType> {
     return req.post(this.#serverPath, this.toJSON());
+  }
+
+  async save(req: AxiosInstance): Promise<axiosResType> {
+    const response = await req.post(this.#serverPath, this.toJSON());
+    this.#id = response.data._id ?? null;
+    return response;
   }
 }
 

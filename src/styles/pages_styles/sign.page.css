@@ -126,6 +126,6 @@ main {
   color: #fff;
   text-align: center;
   font-size: 18px;
-  font-family: Inter;
+  font-family: inherit;
   font-weight: 300;
 }

@@ -9,6 +9,7 @@ type InputContainerProps = {
   input_autoComplete?: string;
   input_required?: boolean;
   input_value?: string;
+  input_minlength?: number | undefined;
   on_input: (event: React.ChangeEvent<HTMLInputElement>) => void;
   button?: boolean;
   data_list?: boolean;
@@ -28,6 +29,7 @@ export default function Input_container({
   button = false,
   data_list = false,
   dataOptions = [],
+  input_minlength = undefined,
 }: InputContainerProps) {
   return (
     <div className={styles.input_container}>
@@ -41,6 +43,7 @@ export default function Input_container({
         button={button}
         input_required={input_required}
         data_list={data_list ? "dl" : ""}
+        input_minlength={input_minlength}
       />
       {data_list && dataOptions.length > 0 && (
         <datalist id="dl">

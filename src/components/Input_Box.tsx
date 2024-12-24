@@ -11,6 +11,7 @@ type PropsType = {
   placeholder?: string;
   button?: boolean;
   input_value?: string;
+  input_minlength?: number | undefined;
   on_input: (event: React.ChangeEvent<HTMLInputElement>) => void;
   data_list?: string;
   input_required?: boolean;
@@ -25,6 +26,7 @@ export default function Input_Box({
   on_input,
   input_required = false,
   data_list,
+  input_minlength = undefined,
 }: PropsType) {
   const inp = useRef<HTMLInputElement>(null);
   const img = useRef<HTMLImageElement>(null);
@@ -67,6 +69,7 @@ export default function Input_Box({
         onChange={on_input}
         onInvalid={handleInvalid}
         list={data_list}
+        minLength={input_minlength}
       />
       {button && (
         <button onClick={toggle_password} type="button">

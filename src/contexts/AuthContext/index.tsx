@@ -1,152 +1,211 @@
+/* eslint-disable react-refresh/only-export-components */
+import React, { createContext, useContext, useEffect, useState } from "react";
 import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { User } from "../../models";
-import { loginFunc, loginInterface } from "./login";
-import { getTokenInfo } from "../../utilities/getTokenInfo";
-import { UserArg } from "../../models/User";
+  onAuthStateChanged,
+  User,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signOut,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 
-interface AuthContextInterface {
-  user: User | null;
-  loading: boolean;
-  error: boolean | string;
-  logout: () => void;
-  login: ({ email, password }: loginInterface) => Promise<User | null>;
+import { auth } from "../../firebase";
+import { Profile } from "../../models/Profile";
+import getApiReqiest from "../../utilities/getApiRequest";
+
+interface authReturnType {
+  done: boolean;
+  message: string;
 }
 
+interface AuthContextType {
+  user: User | null;
+  profile: Profile | null;
+  loading: boolean;
+  loginWithEmailPassword: ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => Promise<authReturnType | null>;
+  signupWithEmailPassword: ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => Promise<authReturnType | null>;
+  loginWithGoogle: () => Promise<authReturnType | null>;
+  logout: () => Promise<authReturnType>;
+}
+
+function hendelAuthError(err: unknown): authReturnType {
+  if (err instanceof Error) {
+    // console.log(err.name);
+    // console.log(err.message);
+
+    if (err.name === "FirebaseError") {
+      if (err.message === "Firebase: Error (auth/email-already-in-use).") {
+        return {
+          done: false,
+          message: "User already exist.",
+        };
+      } else if (
+        err.message ==
+        "Firebase: Password should be at least 6 characters (auth/weak-password)."
+      ) {
+        return {
+          done: false,
+          message: "Password should be at least 6 characters.",
+        };
+      }
+    }
+
+    return {
+      done: false,
+      message: "Invalid. Provide valid infomation to login.",
+    };
+  }
+  return {
+    done: false,
+    message: "Unknown error occurred.",
+  };
+}
+
+const defaultAuthReturn = {
+  done: false,
+  message: "Error 101",
+};
 const defaultContext = {
   user: null,
+  profile: null,
   loading: true,
-  error: false,
-  login: async () => null,
-  logout: () => {},
-} as AuthContextInterface;
-
-const AuthContext = createContext(defaultContext);
-
-function useAuthContext() {
-  return useContext(AuthContext);
-}
-
-type AuthProviderType = {
-  children: React.ReactNode;
+  loginWithEmailPassword: async () => null,
+  loginWithGoogle: async () => null,
+  signupWithEmailPassword: async () => null,
+  logout: async () => defaultAuthReturn,
 };
 
-function AuthProvider({ children }: AuthProviderType) {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean | string>(false);
-  const token = localStorage.getItem("token");
+const AuthContext = createContext<AuthContextType>(defaultContext);
 
-  // Logout function
-  const logout = useCallback(() => {
-    localStorage.removeItem("token");
-    setUser(null);
-    setError(false);
-    setLoading(false);
+const useAuthContext = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
+
+const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  async function loginWithEmailPassword({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      return {
+        done: true,
+        message: "Login successfull.",
+      };
+    } catch (err) {
+      throw hendelAuthError(err);
+    }
+  }
+
+  async function signupWithEmailPassword({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      return {
+        done: true,
+        message: "Signup Successfull.",
+      };
+    } catch (err) {
+      throw hendelAuthError(err);
+    }
+  }
+
+  async function loginWithGoogle() {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+
+      return {
+        done: true,
+        message: "Login successfull.",
+      };
+    } catch (err) {
+      throw hendelAuthError(err);
+    }
+  }
+
+  async function logout() {
+    try {
+      await signOut(auth);
+      return {
+        done: true,
+        message: "Logout successfully.",
+      };
+    } catch (err) {
+      return hendelAuthError(err);
+    }
+  }
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        const req = getApiReqiest(await currentUser.getIdToken());
+        try {
+          const { data } = await req.get("/profile");
+          const profile = new Profile(data, currentUser);
+          setUser(currentUser);
+          setProfile(profile);
+        } catch (err) {
+          console.log(err);
+          setUser(currentUser);
+          setProfile(null);
+        }
+      } else {
+        setUser(currentUser);
+        setProfile(null);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  // Login function
-  // interface errorType {
-  //   message: string;
-  //   status: number;
-  //   token: string | null;
-  //   user: User | null;
-  // }
-  const login = useCallback(
-    async ({ email, password }: loginInterface) => {
-      try {
-        if (user) {
-          return user;
-        }
-        if (token) {
-          const newUser = await getTokenInfo();
-          setUser(newUser);
-          return newUser;
-        } else {
-          const { user: userInfo, token } = await loginFunc({
-            email,
-            password,
-          });
-          if (token) {
-            localStorage.setItem("token", token);
-          }
-          if (userInfo) {
-            const newUser = new User(userInfo);
-
-            setUser(newUser);
-            setLoading(false);
-            setError(false);
-            return newUser;
-          } else {
-            setLoading(false);
-            setError("Unknown Error.");
-            return user;
-          }
-        }
-      } catch (err: unknown) {
-        if (err instanceof Object) {
-          type tE = {
-            status: string | null;
-            message: string | null;
-            user: UserArg | null;
-            token: string | null;
-          };
-          const newError: tE = {
-            status: null,
-            message: null,
-            token: null,
-            user: null,
-            ...err,
-          };
-          setLoading(false);
-          setError(newError.message ? newError.message : "Some Error");
-          if (!token && newError.token) {
-            localStorage.setItem("token", newError.token);
-          }
-          throw newError;
-        } else {
-          setLoading(false);
-          setError("Some Error!");
-          console.log(err);
-        }
-        // console.log(email, password);
-        return null;
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [token]
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        profile,
+        loading,
+        loginWithEmailPassword,
+        signupWithEmailPassword,
+        loginWithGoogle,
+        logout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
+};
 
-  // Token initialization
-  useEffect(() => {
-    if (token && !user) {
-      getTokenInfo()
-        .then((info) => {
-          if (info) {
-            setUser(info);
-            setLoading(false);
-          } else {
-            logout(); // Clear invalid token
-          }
-        })
-        .catch(() => {
-          setError("Failed to verify token");
-          logout();
-        });
-    } else {
-      setLoading(false);
-    }
-  }, [user, token, logout]);
-
-  const value = { user, loading, error, logout, login };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-// eslint-disable-next-line react-refresh/only-export-components
-export { AuthContext, AuthProvider, useAuthContext };
+export { useAuthContext, AuthContext, AuthProvider };

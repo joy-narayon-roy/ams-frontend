@@ -23,6 +23,20 @@ export default function Header() {
     navigator("/");
   }
 
+  function trancket(text: string | null) {
+    if (!text) {
+      return null;
+    }
+    if (text.split(" ").length > 2) {
+      const st = text.split(" ");
+      return `${st[0]} ${st[1]}...`;
+    }
+    if (text.length > 9) {
+      return `${text.slice(0, 9)}...`;
+    }
+    return text;
+  }
+
   return (
     <>
       <header>
@@ -31,7 +45,7 @@ export default function Header() {
           className={styles["container"]}
           // className='mt-0 bg-black'
         >
-          <section className={styles["left"]}>
+          <section className={`${styles["left"]} cursor-pointer`}>
             <img
               onClick={go_to_home}
               src={logo512}
@@ -45,8 +59,11 @@ export default function Header() {
             {user && (
               <>
                 <div onClick={togle_manu} className={styles["user-info"]}>
-                  <img src={user_icone} alt="" />
-                  <h4>{user.name}</h4>
+                  <img
+                    src={user.photoURL ? user.photoURL : user_icone}
+                    alt=""
+                  />
+                  <h4>{trancket(user.displayName) || "Demo name"}</h4>
                 </div>
                 <div
                   id="user_manu"

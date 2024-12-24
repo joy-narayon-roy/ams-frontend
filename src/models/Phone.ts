@@ -1,13 +1,14 @@
+import { AxiosInstance } from "axios";
 import BasicClass from "./BasicClass.js";
-import User from "./User.js";
+import { Profile } from "./Profile.js";
 
 interface PhoneType {
-  _id?: string;
+  _id?: string | null | undefined;
   user_name: string;
   number: string;
   registered_by: string;
   active?: boolean | null;
-  user?: string | null;
+  description?: string;
 }
 
 interface UpdateType {
@@ -15,37 +16,41 @@ interface UpdateType {
   number?: string;
   registered_by?: string;
   active?: string | boolean;
+  description?: string;
 }
 
 class Phone extends BasicClass {
-  id: string | null;
   user_name: string;
   number: string;
   registered_by: string;
-  user: string | null;
   active: boolean | null;
-  #user: User | null;
+  description: string;
+  author: string;
+  #profile: Profile | null;
 
   constructor(
-    { _id, user_name, number, registered_by, active = null, user }: PhoneType,
-    user_class: User | null = null
+    {
+      _id,
+      user_name,
+      number,
+      registered_by,
+      active = true,
+      description = "",
+    }: PhoneType,
+    profile_class: Profile
   ) {
-    super("/phone");
-    this.id = _id ? _id : null;
+    super("/phone", _id);
     this.user_name = user_name;
     this.number = number;
     this.active = active;
     this.registered_by = registered_by;
-    this.#user = user_class ?? null;
-    this.user = user ?? null;
+    this.description = description;
+    this.author = profile_class.uid;
+    this.#profile = profile_class;
   }
 
-  get user_info() {
-    return this.#user;
-  }
-
-  get data_type(): string {
-    return "phone";
+  get profile() {
+    return this.#profile;
   }
 
   imp({ user_name, number, registered_by, active }: UpdateType) {
@@ -53,7 +58,7 @@ class Phone extends BasicClass {
       this.user_name = user_name;
     }
     if (number) {
-      if (this.#user?.phones.findOneByNumber(number)) {
+      if (this.#profile?.phones.findOneByNumber(number)) {
         throw new Error("Phone alrady exist");
       }
       this.number = number;
@@ -66,15 +71,43 @@ class Phone extends BasicClass {
     }
   }
 
-  update(updateData: UpdateType, req: any) {
+  update(updateData: UpdateType, req: AxiosInstance) {
     const id = this.id;
-    if (updateData.number == this.number) {
-      delete updateData.number;
+    const jsonForm = this.toJSON();
+
+    const updatedEntries = Object.entries(updateData).filter(
+      ([k, v]: [string, unknown]) => (jsonForm ? jsonForm[k] !== v : false)
+    );
+
+    if (updateData.number && updateData.number !== this.number) {
+      const existPhone = this.profile?.phones.findOneByNumber(
+        updateData.number
+      );
+
+      if (existPhone) {
+        throw new Error(`${existPhone.number} is a;ready exists!`);
+      }
     }
+
+    if (updatedEntries.length === 0) {
+      return {
+        async save() {
+          return { data: updateData };
+        },
+      };
+    }
+
+    const updatedInfo = updatedEntries.reduce(
+      (pre: { [key: string]: string }, [k, v]) => {
+        pre[k] = v;
+        return pre;
+      },
+      {}
+    );
 
     return {
       save() {
-        return req.patch(`/phone/${id}`, updateData);
+        return req.patch(`phone/${id}`, updatedInfo);
       },
     };
   }

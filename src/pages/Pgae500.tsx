@@ -4,24 +4,22 @@ import { Navigate, useLocation } from "react-router";
 
 export default function Page500() {
   const location = useLocation();
+
   useEffect(() => {
     document.title = "AMS - Some Error.";
   }, []);
 
-  if (!location.state) {
-    return <Navigate to={"/"} />;
-  }
-
-  console.log(location.state);
-
   return (
     <>
-      <main>
-        <div>
-          <img src={image500} alt="Image" />
-        </div>
-      </main>
-      ;
+      {!location.state ? (
+        <Navigate to={"/"} />
+      ) : (
+        <main>
+          <div>
+            <img src={image500} alt="Image" />
+          </div>
+        </main>
+      )}
     </>
   );
 }

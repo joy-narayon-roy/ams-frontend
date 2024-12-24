@@ -7,7 +7,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import getEntityIcon from "../utilities/getEntityIcon";
 import titleConverter from "../utilities/titleConverter";
-import { formValidator, parseForm } from "../tools";
+import { formValidator, parseEmailForm, parsePhoneForm } from "../tools";
 import { useAuthContext } from "../contexts/AuthContext";
 import { createEmail, createPhone } from "../utilities/createDatas";
 import { useAlert } from "../contexts/AlertContext";
@@ -16,7 +16,7 @@ export default function CreateAccount() {
   const location = useLocation();
   const { addAlert } = useAlert();
   const nav = useNavigate();
-  const { user } = useAuthContext();
+  const { profile } = useAuthContext();
   const { pathname } = location;
   const [mode, entity] = pathname.replace("/", "").split("/");
   const icone = getEntityIcon(entity);
@@ -34,12 +34,10 @@ export default function CreateAccount() {
     }
     ev.currentTarget.setAttribute("disabled", "true");
 
-    const formData = parseForm(inputForm);
-
-    if (user) {
+    if (profile) {
       switch (entity) {
         case "phone":
-          createPhone(user, formData).then((status) => {
+          createPhone(profile, parsePhoneForm(inputForm)).then((status) => {
             addAlert(status.done ? "success" : "failed", status.message);
             if (status.done) {
               return nav(-1);
@@ -48,7 +46,7 @@ export default function CreateAccount() {
           });
           break;
         case "email":
-          createEmail(user, formData).then((status) => {
+          createEmail(profile, parseEmailForm(inputForm)).then((status) => {
             addAlert(status.done ? "success" : "failed", status.message);
             if (status.done) {
               return nav(-1);

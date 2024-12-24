@@ -1,9 +1,7 @@
 import { AxiosError } from "axios";
-import { User } from "../models";
-import { PhoneType } from "../models/Phone";
-import { EmailType } from "../models/Email";
+import { Profile, EmailType, PhoneType } from "../models";
 
-import httpReq from "./httpReq";
+import getApiRequest from "./getApiRequest";
 
 type createReturnType = {
   done: boolean;
@@ -30,19 +28,21 @@ function hendelError(err: unknown): createReturnType {
 }
 
 async function createPhone(
-  user: User,
-  formData: Partial<PhoneType>
+  profile: Profile,
+  formData: PhoneType
+  // formData: Partial<PhoneType>
 ): Promise<createReturnType> {
   try {
-    const new_phone = user.createPhone({
+    const req = getApiRequest(await profile.user.getIdToken());
+    const new_phone = profile.createPhone({
       user_name: formData.user_name!,
       number: formData.number!,
       registered_by: formData.registered_by!,
+      active: formData.active!,
+      description: formData.description,
     });
-    const response = await new_phone.save(httpReq);
-    const _id = (response.data as { _id: string })._id;
-    new_phone.id = _id;
-    user.phones.add(_id, new_phone);
+    await new_phone.save(req);
+    profile.phones.add(new_phone.id, new_phone);
     return {
       done: true,
       message: "Phone " + new_phone.number + " Saved.",
@@ -53,19 +53,16 @@ async function createPhone(
 }
 
 async function createEmail(
-  user: User,
-  formData: Partial<EmailType>
+  profile: Profile,
+  // formData: Partial<EmailType>
+  formData: EmailType
 ): Promise<createReturnType> {
   try {
-    const new_email = user.createEmail({
-      user_name: formData.user_name!,
-      address: formData.address!,
-      password: formData.password!,
-    });
-    const response = await new_email.save(httpReq);
-    const _id = (response.data as { _id: string })._id;
-    new_email.id = _id;
-    user.emails.add(_id, new_email);
+    const req = getApiRequest(await profile.user.getIdToken());
+    const new_email = profile.createEmail({ ...formData });
+    await new_email.save(req);
+
+    profile.emails.add(new_email.id, new_email);
     return {
       done: true,
       message: "Email " + new_email.address + " saved.",

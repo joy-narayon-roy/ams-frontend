@@ -2,7 +2,6 @@ import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Loading from "./components/Loading";
 import { useAuthContext } from "./contexts/AuthContext";
-import { User } from "./models";
 
 import {
   Deshboard,
@@ -11,6 +10,7 @@ import {
   CreateAccount,
   PgaeNotfound,
   PgaeServerError,
+  Signup,
 } from "./pages";
 import Test from "./Test";
 
@@ -28,19 +28,23 @@ function NotLogedin({ children }: { children: React.ReactNode }) {
   if (loading) {
     return <Loading />;
   }
-  return user && user instanceof User ? <Navigate to={"/"} /> : children;
+  return user ? <Navigate to={"/"} /> : children;
 }
 
 function UserProtected({ children }: { children: React.ReactNode }) {
-  const { user, loading, error } = useAuthContext();
-  if (!user && loading && !error) {
+  const { user, profile, loading } = useAuthContext();
+  if (loading) {
     return <Loading />;
-  } else if (!user && !loading && error) {
-    return <Navigate to={"/failed"} state={error} />;
-  } else if (!user && !loading && !error) {
-    return <Navigate to={"/signin"} />;
   } else {
-    return children;
+    if (!user) {
+      return <Navigate to={"/signin"} />;
+    } else {
+      if (!profile) {
+        return <Navigate to={"/error"} state={{ message: "Profile error." }} />;
+      } else {
+        return children;
+      }
+    }
   }
 }
 
@@ -103,6 +107,14 @@ function AppRoutes() {
         element={
           <NotLogedin>
             <Signin />
+          </NotLogedin>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <NotLogedin>
+            <Signup />
           </NotLogedin>
         }
       />

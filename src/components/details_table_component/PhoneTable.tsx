@@ -5,9 +5,9 @@ import { useAuthContext } from "../../contexts/AuthContext";
 
 export default function PhoneTable() {
   const { pathname } = useLocation();
-  const { user } = useAuthContext();
+  const { profile } = useAuthContext();
   const id = pathname.replace("/details/phone/", "");
-  const data = user?.phones.findOneById(id);
+  const data = profile?.phones.findOneById(id);
 
   const onCopy = (ev: string) => {
     window.navigator.clipboard.writeText(ev).then(() => {

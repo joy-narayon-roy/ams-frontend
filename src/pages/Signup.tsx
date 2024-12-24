@@ -4,13 +4,13 @@ import "../styles/pages_styles/sign.page.css";
 import SigninForm from "../components/SigninForm";
 export default function Signin() {
   useEffect(() => {
-    document.title = "AMS - Signin";
+    document.title = "AMS - Signup";
   }, []);
 
   return (
     <>
       <main>
-        <SigninForm title={"Signin"} />
+        <SigninForm title={"Signup"} mode="signup" />
       </main>
     </>
   );

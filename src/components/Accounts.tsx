@@ -4,7 +4,7 @@ import pdf_downlaod from "../images/pdf_download.png";
 import Empty from "./Empty";
 import ArrayObj from "../models/ArrayObj";
 import { Email, Phone } from "../models";
-import Vertical_card from "./Vertical_card";
+import VerticalCard from "./VerticalCard";
 
 interface AccountsProps {
   title: string;
@@ -63,11 +63,7 @@ export default function Accounts({
       <div className={styles["account_container-cards"]}>
         {datas.length === 0 && <Empty />}
         {datas.map(({ key, value }: { key: string; value: Phone | Email }) => (
-          <Vertical_card
-            on_click={goto_details}
-            key={key}
-            data={value}
-          />
+          <VerticalCard on_click={goto_details} key={key} data={value} />
         ))}
       </div>
     </section>

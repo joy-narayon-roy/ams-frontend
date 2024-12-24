@@ -5,8 +5,9 @@ import { useAuthContext } from "../../contexts/AuthContext";
 export default function UpdatePhone() {
   const location = useLocation();
   const id = location.pathname.replace("/update/phone/", "");
-  const { user } = useAuthContext();
-  const data = user && user.phones ? user.phones.findOneById(id) : null;
+  const { profile } = useAuthContext();
+  const data =
+    profile && profile.phones ? profile.phones.findOneById(id) : null;
 
   return (
     <div className="px-6 py-3">

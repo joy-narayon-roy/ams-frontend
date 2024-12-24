@@ -1,7 +1,7 @@
 import ArrayObj, { _addLength, _removeLength } from "./ArrayObj.js";
 import { EmailType } from "./Email.js";
 import Email from "./Email.js";
-import User from "./User.js";
+import { Profile } from "./Profile.js";
 
 const _by_addr = Symbol("");
 
@@ -9,11 +9,11 @@ class Emails extends ArrayObj {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [_by_addr]: { [key: string]: any };
 
-  constructor(emails: [EmailType], user: User) {
+  constructor(emails: [EmailType] | [] = [], profile: Profile) {
     super();
     this[_by_addr] = {};
     emails.forEach((v: EmailType) => {
-      const email = new Email({ ...v }, user);
+      const email = new Email({ ...v }, profile);
       if (email.id) {
         this[email.id] = email;
         this[_by_addr][email.address] = email;
@@ -30,7 +30,7 @@ class Emails extends ArrayObj {
     if (this[id]) {
       this[id] = value;
       this[_by_addr][value.address] = value;
-    }else{
+    } else {
       this[id] = value;
       this[_by_addr][value.address] = value;
       this[_addLength]();

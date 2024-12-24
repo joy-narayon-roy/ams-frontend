@@ -2,10 +2,14 @@ import styles from "../styles/pages_styles/deshboard.module.css";
 
 import { useAuthContext } from "../contexts/AuthContext";
 import Accounts from "../components/Accounts";
+import { useEffect } from "react";
 
 export default function Deshboard() {
-  const { user } = useAuthContext();
-  //   console.log(user);
+  const { profile } = useAuthContext();
+  useEffect(() => {
+    document.title = "AMS - Deshboard";
+  }, []);
+
   return (
     <>
       <main className={styles.main}>
@@ -27,20 +31,20 @@ export default function Deshboard() {
             <img src="../images/search.png" alt="" />
           </button>
         </section>
-        {user && (
+        {profile && (
           <Accounts
             styles={styles}
             title="Phones"
-            datas={user && user.phones}
+            datas={profile && profile.phones}
             data_type={"phone"}
           />
         )}
 
-        {user && (
+        {profile && (
           <Accounts
             styles={styles}
             title="Email"
-            datas={user && user.emails}
+            datas={profile && profile.emails}
             data_type={"email"}
           />
         )}

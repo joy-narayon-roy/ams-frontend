@@ -4,9 +4,9 @@ import { CreateEmail } from "../create_accounts_forms";
 
 export default function Update_email() {
   const { pathname } = useLocation();
-  const { user } = useAuthContext();
+  const { profile } = useAuthContext();
   const id = pathname.replace("/update/email/", "");
-  const data = user?.emails.findById(id);
+  const data = profile?.emails.findById(id);
 
   return (
     <div className="px-6 py-3">

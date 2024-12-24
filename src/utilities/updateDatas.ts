@@ -1,14 +1,19 @@
-import { Email, Phone, User } from "../models";
-import httpReq from "../utilities/httpReq";
+import { Email, Phone, Profile } from "../models";
+import getApiRequest from "./getApiRequest";
 
-async function updateEmail(user: User, emailId: string, updatedData: object) {
-  const email = user.emails.findById(emailId);
-  const updateInstence = email.update(updatedData, httpReq);
+async function updateEmail(
+  profile: Profile,
+  emailId: string,
+  updatedData: object
+) {
+  const req = getApiRequest(await profile.user.getIdToken());
+  const email = profile.emails.findById(emailId);
 
   try {
+    const updateInstence = email.update(updatedData, req);
     const { data } = await updateInstence.save();
-    const updatedEmail = new Email(data);
-    user.emails.add(updatedEmail.id, updatedEmail);
+    const updatedEmail = new Email(data, profile);
+    profile.emails.add(updatedEmail.id, updatedEmail);
     return {
       done: true,
       message: "Email updated.",
@@ -25,20 +30,21 @@ async function updateEmail(user: User, emailId: string, updatedData: object) {
   }
 }
 
-async function updatePhone(user: User, id: string, updatedData: object) {
-  const phone = user.phones.findOneById(id);
+async function updatePhone(profile: Profile, id: string, updatedData: object) {
+  const phone = profile.phones.findOneById(id);
   if (!phone) {
     return {
       done: false,
       message: "Phone not found!",
     };
   }
+  const req = getApiRequest(await profile.user.getIdToken());
 
-  const updateInstence = phone.update(updatedData, httpReq);
   try {
+    const updateInstence = phone.update(updatedData, req);
     const { data } = await updateInstence.save();
-    const updatedPhone = new Phone(data);
-    user.phones.add(id, updatedPhone);
+    const updatedPhone = new Phone(data, profile);
+    profile.phones.add(id, updatedPhone);
     return {
       done: true,
       message: "Phone updated.",

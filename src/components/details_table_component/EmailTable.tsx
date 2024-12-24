@@ -1,15 +1,15 @@
 import style from "../../styles/components_styles/details_table.module.css";
 import copy from "../../images/copying.png";
-import Vertical_card from "../Vertical_card";
+import VerticalCard from "../VerticalCard";
 import { useLocation, useNavigate } from "react-router";
 import { useAuthContext } from "../../contexts/AuthContext";
 
 export default function EmailTable() {
   const nav = useNavigate();
   const { pathname } = useLocation();
-  const { user } = useAuthContext();
+  const { profile } = useAuthContext();
   const id = pathname.replace("/details/email/", "");
-  const email = user?.emails.findById(id);
+  const email = profile?.emails.findById(id);
 
   const phone = email?.phone;
   const phone_number = email?.phone_number;
@@ -83,7 +83,7 @@ export default function EmailTable() {
           <tr className={style["details_card-body_table_tr"]}>
             <td className={style["details_card-body_table_tr_td"]}>Phone :</td>
             <td className={style["details_card-body_table_tr_td"]}>
-              <Vertical_card
+              <VerticalCard
                 data={phone}
                 on_click={() => goto_details("phone", phone.id || "")}
               />

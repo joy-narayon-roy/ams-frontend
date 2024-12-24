@@ -14,7 +14,7 @@ type propsType = {
     provider: object;
   }) => unknown;
 };
-export default function Vertical_card({
+export default function VerticalCard({
   data,
   on_click = () => {},
 }: propsType) {

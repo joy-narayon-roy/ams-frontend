@@ -5,7 +5,7 @@ import { useAuthContext } from "../contexts/AuthContext";
 import getIcone from "../hooks/useIcone";
 import { parseForm } from "../tools";
 import { updateEmail, updatePhone } from "../utilities/updateDatas";
-import httpReq from "../utilities/httpReq";
+
 import { useAlert } from "../contexts/AlertContext";
 
 export default function Details_page({
@@ -15,7 +15,7 @@ export default function Details_page({
 }) {
   const nav = useNavigate();
   const location = useLocation();
-  const { user } = useAuthContext();
+  const { profile } = useAuthContext();
   const { addAlert } = useAlert();
 
   const { pathname } = location;
@@ -39,34 +39,42 @@ export default function Details_page({
   }
 
   function onDelete(ev: React.MouseEvent<HTMLButtonElement>) {
-    const deleteBtn = ev.currentTarget;
-    deleteBtn.setAttribute("disabled", "true");
-    const okey = confirm(`Want to Delete - ${entity} - ${id}?`);
-    if (okey) {
-      httpReq
-        .delete(`${entity}/${id}`)
-        .then(() => {
-          addAlert("success", `${entity} ${id} deleted.`);
-          if (user) {
-            switch (entity) {
-              case "phone":
-                user.phones.remove(id);
-                break;
-              case "email":
-                user.emails.remove(id);
-                break;
-              default:
-                break;
-            }
-          }
-          nav("/");
-        })
-        .catch((err) => {
-          addAlert("failed", `Faild to delete ${entity} ${id}.`);
-          console.log(err);
-        });
-    } else {
-      deleteBtn.removeAttribute("disabled");
+    if (profile) {
+      const deleteBtn = ev.currentTarget;
+
+      deleteBtn.setAttribute("disabled", "true");
+
+      const okey = confirm(`Want to Delete - ${entity} - ${id}?`);
+
+      if (okey) {
+        if (entity == "phone") {
+          profile
+            .deletePhoneById(id)
+            .then(() => {
+              addAlert("success", "Phone deleted done.");
+              deleteBtn.removeAttribute("disabled");
+              nav("/");
+            })
+            .catch((err) => {
+              addAlert("failed", err.message);
+              deleteBtn.removeAttribute("disabled");
+            });
+        } else if (entity == "email") {
+          profile
+            .deleteEmailById(id)
+            .then(() => {
+              addAlert("success", "Email deleted done.");
+              deleteBtn.removeAttribute("disabled");
+              nav("/");
+            })
+            .catch((err) => {
+              addAlert("failed", err.message);
+              deleteBtn.removeAttribute("disabled");
+            });
+        }
+      } else {
+        deleteBtn.removeAttribute("disabled");
+      }
     }
   }
 
@@ -78,10 +86,10 @@ export default function Details_page({
 
       const updatedData = parseForm(inputForm);
 
-      if (user) {
+      if (profile) {
         switch (entity) {
           case "phone":
-            updatePhone(user, id, updatedData).then((status) => {
+            updatePhone(profile, id, updatedData).then((status) => {
               addAlert(status.done ? "success" : "failed", status.message);
               if (status.done) {
                 return nav(-1);
@@ -90,7 +98,7 @@ export default function Details_page({
             });
             break;
           case "email":
-            updateEmail(user, id, updatedData).then((status) => {
+            updateEmail(profile, id, updatedData).then((status) => {
               addAlert(status.done ? "success" : "failed", status.message);
               if (status.done) {
                 return nav(-1);
@@ -131,12 +139,12 @@ export default function Details_page({
     window.addEventListener("keydown", onKeydownFun);
     switch (entity) {
       case "email":
-        if (user && user.emails && user?.emails.findById(id)) {
-          setInfo(getIcone(user?.emails.findById(id)));
+        if (profile && profile.emails && profile?.emails.findById(id)) {
+          setInfo(getIcone(profile?.emails.findById(id)));
         }
         break;
       case "phone":
-        setInfo(getIcone(user?.phones.findOneById(id)));
+        setInfo(getIcone(profile?.phones.findOneById(id)));
         break;
 
       default:
@@ -166,7 +174,7 @@ export default function Details_page({
         sumit_btn={false}
       >
         {editMode ? (
-          <form onSubmit={onSubmit}>
+          <form id="inputForm" onSubmit={onSubmit}>
             <Outlet />
             <button className="hidden" type="submit"></button>
           </form>
