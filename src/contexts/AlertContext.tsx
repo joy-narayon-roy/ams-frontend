@@ -29,7 +29,8 @@ export const AlertProvider: React.FC<{ children: ReactNode }> = ({
   const [alerts, setAlerts] = useState<Alert[]>([]);
 
   const addAlert = useCallback((type: AlertType, message: string) => {
-    const id = crypto.randomUUID();
+    // const id = crypto.randomUUID();
+    const id = `${parseInt(`${Math.random() * 100000}`, 10)}`;
     const newAlert = { id, type, message };
     setAlerts((prevAlerts) => [...prevAlerts, newAlert]);
 

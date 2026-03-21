@@ -1,36 +1,21 @@
-/* @layer utilities { */
 header {
-  @apply py-2;
+  @apply w-full flex flex-col;
   background: var(--col-main);
   color: var(--col-pri);
 }
 header .container {
-  width: 90%;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 1.625rem;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: center;
+  @apply p-1 flex justify-between w-full max-w-6xl mx-auto;
 }
 
 header .left {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-content: center;
-  justify-content: flex-start;
+  @apply flex items-center p-1;
 }
 header .left img.logo {
-  max-width: 3.5rem;
+  max-width: 3rem;
 }
 
 header .left h1 {
-  font-size: 3.125rem;
-  font-weight: lighter;
+  @apply text-3xl;
   padding: 0 0.5rem;
 }
 
@@ -46,7 +31,7 @@ header .right {
 }
 header .right .user-info {
   max-width: 10rem;
-  min-width: 6.25rem;
+  /* min-width: 6.25rem; */
   background: var(--col-sec);
   border: 2px solid var(--col-main-outline);
   color: var(--col-main);
@@ -58,16 +43,18 @@ header .right .user-info {
   cursor: pointer;
 }
 header .right .user-info img {
-  width: 40px;
-  padding: 0 0.5rem 0 0;
+  @apply w-6;
+}
+header .right .user-info h4 {
+  @apply w-0 h-0 overflow-hidden md:h-auto md:w-auto;
 }
 
 header .right .user-manu {
   position: absolute;
   top: calc(2.75rem + 10px);
-  left: 0;
+  left: -110px;
   right: 0;
-  width: 100%;
+  width: 150px;
   height: 0;
   box-sizing: border-box;
   overflow: hidden;
@@ -92,7 +79,7 @@ header .right .user-manu::after {
   top: -10px;
   left: 0;
   right: 0;
-  margin: 0 calc(50% - 25px);
+  margin: 0 calc(100% - 25px);
 }
 header .right .user-manu ul {
   display: block;

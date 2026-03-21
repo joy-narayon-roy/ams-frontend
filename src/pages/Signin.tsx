@@ -1,7 +1,8 @@
 import { useEffect } from "react";
-import "../styles/pages_styles/sign.page.css";
-
 import SigninForm from "../components/SigninForm";
+
+import '../styles/pages_styles/signin.page.css';
+
 export default function Signin() {
   useEffect(() => {
     document.title = "AMS - Signin";
@@ -9,7 +10,7 @@ export default function Signin() {
 
   return (
     <>
-      <main>
+      <main className="signin_main" >
         <SigninForm title={"Signin"} />
       </main>
     </>

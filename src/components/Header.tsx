@@ -38,54 +38,54 @@ export default function Header() {
   }
 
   return (
-    <>
-      <header>
-        <section
-          onBlur={remove_manu}
-          className={styles["container"]}
-          // className='mt-0 bg-black'
-        >
-          <section className={`${styles["left"]} cursor-pointer`}>
-            <img
-              onClick={go_to_home}
-              src={logo512}
-              alt="logo"
-              className={styles["logo"]}
-            />
-            <h1 onClick={go_to_home}>AMS</h1>
-          </section>
-
-          <section className={styles["right"]}>
-            {user && (
-              <>
-                <div onClick={togle_manu} className={styles["user-info"]}>
-                  <img
-                    src={user.photoURL ? user.photoURL : user_icone}
-                    alt=""
-                  />
-                  <h4>{trancket(user.displayName) || "Demo name"}</h4>
-                </div>
-                <div
-                  id="user_manu"
-                  className={`${styles["user-manu"]} ${
-                    show_manu && styles["show_manu"]
-                  }`}
-                >
-                  <ul>
-                    <Link to="/updateprofile">Update</Link>
-                    <Button text="Signout" on_click={logout} />
-                  </ul>
-                </div>
-              </>
-            )}
-            {!user && (
-              <Link className="btn_pri" to="/signin">
-                Signin
-              </Link>
-            )}
-          </section>
+    <header>
+      <section
+        onBlur={remove_manu}
+        className={styles["container"]}
+      >
+        <section className={`${styles["left"]} cursor-pointer`}>
+          <img
+            onClick={go_to_home}
+            src={logo512}
+            alt="logo"
+            className={styles["logo"]}
+          />
+          <h1 onClick={go_to_home}>AMS</h1>
         </section>
-      </header>
-    </>
+
+        <section className={styles["right"]}>
+          {user && (
+            <>
+              <div onClick={togle_manu} className={styles["user-info"]}>
+                <img
+                  src={user_icone} //|| user.photoURL ? user.photoURL : user_icone}
+                  alt=""
+                />
+                <h4>{trancket(user.displayName) || "Demo name"}</h4>
+              </div>
+              <div
+                id="user_manu"
+                className={`${styles["user-manu"]} ${show_manu && styles["show_manu"]
+                  }`}
+              >
+                <ul>
+                  <li><Link to="/">Home</Link></li>
+                  <li><Link to="/profile">Profile</Link></li>
+                  <Button text="Signout" on_click={logout} />
+                </ul>
+              </div>
+            </>
+          )}
+          {!user && (
+            <Link className="btn_pri" to="/signin">
+              Signin
+            </Link>
+          )}
+
+        </section>
+      </section>
+
+      {/* TODO: I need a nav bar */}
+    </header >
   );
 }

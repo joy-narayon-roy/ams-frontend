@@ -1,3 +1,4 @@
+import style from '../styles/components_styles/logo_button.module.css';
 type propsType = {
   type: "button" | "reset" | "submit";
   alt?: string;
@@ -20,13 +21,13 @@ export default function LogoButton({
   return (
     <button
       type={type}
-      className={`others_container ${class_name}`}
+      className={`${style.others_container} ${style[class_name]}`}
       disabled={disabled}
       style={{ fontFamily: "Open Sans" }}
       onClick={onClick}
     >
-      <img src={logo} alt={alt} className="icon" />
-      <div className="text">{text}</div>
+      <img src={logo} alt={alt} className={style.icon} />
+      <div className={style.text}>{text}</div>
     </button>
   );
 }

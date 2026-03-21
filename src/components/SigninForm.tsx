@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import InputContainer from "./InputContainer";
 import Button from "./Button";
 import LogoButton from "./LogoButton";
-
 import { useAuthContext } from "../contexts/AuthContext";
 import { useAlert } from "../contexts/AlertContext";
+import style from '../styles/components_styles/sign.form.module.css';
 
 export default function SigninForm({
   title,
@@ -59,6 +59,7 @@ export default function SigninForm({
   };
 
   const singin_with_google = () => {
+    alert("Login with google")
     authContext
       .loginWithGoogle()
       .then(() => {
@@ -70,25 +71,25 @@ export default function SigninForm({
       });
   };
 
-  const signin_with_facebook = () => {
-    console.log("Signin facebook");
-  };
+  // const signin_with_facebook = () => {
+  //   console.log("Signin facebook");
+  // };
 
   const { email, password } = userInfo;
 
   return (
     <form
       onSubmit={form_submit_handeler}
-      className="login_form max-w-sm"
+      className={style.login_form}
       action=""
     >
-      <div className="login_form-title">
+      <div className={style['login_form-title']}>
         <h2>{title}</h2>
       </div>
 
-      <div className="line"></div>
+      <div className={style.line}></div>
 
-      <div className="login_form-inputs">
+      <div className={style['login_form-inputs']}>
         <InputContainer
           title="Enter Email"
           input_name="email"
@@ -127,20 +128,19 @@ export default function SigninForm({
         )}
       </div>
 
-      <div className="line"></div>
+      <div className={style.line}></div>
 
-      <div className="others">
+      <div className={style.others}>
         <LogoButton
           onClick={singin_with_google}
           type="button"
-          // disabled
           alt="logo"
           logo="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
           text="Signin With Google"
           class_name="google"
         />
 
-        <LogoButton
+        {/* <LogoButton
           onClick={signin_with_facebook}
           type="button"
           alt="logo"
@@ -148,7 +148,7 @@ export default function SigninForm({
           text="Signin With Facebook"
           class_name="facebook"
           disabled
-        />
+        /> */}
       </div>
     </form>
   );

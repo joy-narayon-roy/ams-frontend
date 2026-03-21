@@ -1,0 +1,41 @@
+.others_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: none;
+  outline: none;
+}
+.others_container:disabled {
+  opacity: 60%;
+}
+.google {
+  background: #d62d20;
+  border: 2px solid #d62d20;
+}
+.facebook {
+  background: #0d47a1;
+  border: 2px solid #0d47a1;
+}
+.icon {
+  display: block;
+  width: 50px;
+  height: 50px;
+  background: #fff;
+}
+.others_container .text {
+  display: flex;
+  padding: 7px 45px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex: 1 0 0;
+  align-self: stretch;
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  font-family: inherit;
+  font-weight: 300;
+}

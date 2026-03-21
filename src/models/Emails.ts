@@ -67,6 +67,10 @@ class Emails extends ArrayObj {
 
     return keys;
   }
+
+  sortByProvider(): Email[] {
+    return [];
+  }
 }
 
 export default Emails;
