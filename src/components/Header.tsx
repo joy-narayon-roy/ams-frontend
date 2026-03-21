@@ -58,7 +58,7 @@ export default function Header() {
             <>
               <div onClick={togle_manu} className={styles["user-info"]}>
                 <img
-                  src={user_icone} //|| user.photoURL ? user.photoURL : user_icone}
+                  src={user.photoURL ? user.photoURL : user_icone}
                   alt=""
                 />
                 <h4>{trancket(user.displayName) || "Demo name"}</h4>
