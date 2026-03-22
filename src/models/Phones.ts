@@ -58,7 +58,7 @@ export default class Phones extends ArrayObj {
   updatePhoneById(id: string, phone: PhoneType) {
     this[id] = phone;
     const old = Object.entries(this[_by_number]).filter(
-      ([k]: [string, Phone]) => k == id
+      ([k]: [string, Phone]) => k == id,
     );
     if (old.length > 0) {
       delete this[_by_number][old[0][0]];
